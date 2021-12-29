@@ -1,4 +1,5 @@
 import {HomeIcon, SearchIcon, LibraryIcon, PlusCircleIcon, HeartIcon, RssIcon} from "@heroicons/react/outline";
+import { signOut } from "next-auth/react";
 
 const Sidebar = () => {
     return (
