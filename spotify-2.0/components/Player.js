@@ -4,6 +4,14 @@ import { useRecoilState } from "recoil";
 import { currentTrackIdState, isPlayingState } from "../atoms/songAtom";
 import useSongInfo from "../hooks/useSongInfo";
 import useSpotify from "../hooks/useSpotify";
+import {
+    RewindIcon,
+    PauseIcon,
+    PlayIcon,
+    FastForwardIcon,
+    ReplyIcon,
+    SwitchHorizontalIcon,
+} from '@heroicons/react/solid';
 
 const Player = () => {
     const spotifyApi = useSpotify();
@@ -25,6 +33,18 @@ const Player = () => {
         }
     };
 
+    const handlePlayPause = () => {
+        spotifyApi.getMyCurrentPlaybackState().then((data) => {
+          if (data.body?.is_playing) {
+            spotifyApi.pause();
+            setIsPlaying(false);
+          } else {
+            spotifyApi.play();
+            setIsPlaying(true);
+          }
+        });
+    };
+
     useEffect(() => {
         if (spotifyApi.getAccessToken() && !currentTrackId) {
           fetchCurrentSong();
@@ -42,6 +62,22 @@ const Player = () => {
                     <p>{songInfo?.artists?.[0]?.name}</p>
                 </div>
             </div>
+
+            {/* Center */}
+            <div className="flex items-center justify-evenly">
+                <SwitchHorizontalIcon className="button" />
+                <RewindIcon className="button" />
+                
+                {isPlaying ? (
+                    <PauseIcon className="button text-[#18D860] w-10 h-10" onClick={handlePlayPause} />
+                ) : (
+                    <PlayIcon className="button w-10 h-10" onClick={handlePlayPause} />
+                )}
+                
+                <FastForwardIcon className="button" />
+                <ReplyIcon className="button" />
+            </div>
+
         </div>
     )
 }
