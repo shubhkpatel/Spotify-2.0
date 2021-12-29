@@ -17,7 +17,7 @@ export default function Home({session}) {
         <Center/>
       </main>
 
-      <div className="sticky b-0">
+      <div className="sticky bottom-0">
         <Player />
       </div>
     </div>
